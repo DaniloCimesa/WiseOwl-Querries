@@ -1,0 +1,9 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/basic-joins/4123/
+
+use WorldEvents
+
+select CountryName
+from tblEvent E
+full outer join tblCountry C
+on E.CountryID=C.CountryID
+Where EventName is null
