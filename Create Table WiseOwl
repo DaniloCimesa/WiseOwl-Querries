@@ -1,0 +1,70 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/creating-tables/4230/
+
+Code:
+
+--The way to do it where you create Help Table
+
+use WorldEvents
+
+create table HelpTbl --Create Table to store data you are about to extract
+(SummaryItem varchar(25), CountEvents smallint) 
+
+insert into HelpTbl--Insert the count of events grouped by Country
+(SummaryItem, CountEvents)
+
+select CountryName, count(EventID) as SumOF
+from tblEvent E
+full join tblCountry Co
+on E.CountryID=Co.CountryID
+full join tblContinent C
+on Co.ContinentID=C.ContinentID
+where EventName is not null
+group by CountryName
+
+select * --Use it just to check what rows you stored in the table
+from HelpTbl
+
+
+Insert into HelpTbl --Insert the count of events which happened in this Millenium
+(SummaryItem, CountEvents)
+values 
+('This Millenium', (
+select count(eventID)
+from tblEvent
+where year(EventDate)>1999))
+
+Insert into HelpTbl --Insert the count of events which happened in Last Millenium
+(SummaryItem, CountEvents)
+values
+('Last Millenium', (
+select count(eventID)
+from tblEvent
+where year(EventDate)<2000))
+
+select * from HelpTbl --Final result of the querry
+order by CountEvents desc
+
+--Another way to solve it. Using Union all on CTE and Regular Querry
+with cte_a
+as (
+select case when EventDate>'2000-01-01' then 'This Millenium'
+else 'Last Millenium' end as [Summary Item]
+from tblEvent E
+full join tblCountry Co
+on E.CountryID=Co.CountryID
+full join tblContinent C
+on Co.ContinentID=C.ContinentID
+)
+select [Summary Item],count([Summary Item]) as CountEvents
+from cte_a
+group by [Summary Item]
+
+union all
+
+ Select CountryName as [Summary Item], Count(eventid) as CountEvents
+from tblEvent E
+full join tblCountry Co
+on E.CountryID=Co.CountryID
+full join tblContinent C
+on Co.ContinentID=C.ContinentID
+group by CountryName
