@@ -1,0 +1,27 @@
+
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1880/
+
+Code:
+
+use Movies --Dataset you can find in zip file on the link above. 
+
+Create table #Tabl1 --Temporary table with PrsName column which stores Person Name, Proffesion column where is person's proffesion and DOB as date of birth
+(PrsName varchar(20), Profession varchar(10), DOB datetime)
+
+insert into #Tabl1
+(PrsName, Profession, DOB)
+
+select ActorName, 'Actor' ,ActorDOB --Select all the actors who are born in 1969
+from tblActor
+where ActorDOB like ('%1969%')
+
+select * from #Tabl1 --You can run this just to check the amount of rows stored in the table.
+
+Insert into #Tabl1
+(PrsName, Profession, DOB)
+
+select DirectorName, 'Director', DirectorDOB --Select all the directos who are born in 1969
+from tblDirector
+where DirectorDOB like '%1969%'
+
+select * from #Tabl1 --Check the final result.
