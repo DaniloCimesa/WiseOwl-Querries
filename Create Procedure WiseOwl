@@ -17,3 +17,4 @@ Where CountryName like '%'+@Letter+'%'
 end
 
 exec CountriesProcedure S
+--For example I used a input letter S.
