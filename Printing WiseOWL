@@ -1,0 +1,19 @@
+Printing in SQL Server
+
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1090/
+
+Code:
+Use HistoricalEvents
+
+declare @List varchar(max)
+set @List=''
+select @List=@List+char(13)+' '+char(10)+EventName+'   /    '+convert(varchar(30),EventDate)
+from tblEvent
+
+PRINT ''
+PRINT 'Great events in history'
+PRINT '-----------------------'
+PRINT ''
+Print 'Event Name      /      Event Date'
+PRINT '------------------------------'
+Print @List
