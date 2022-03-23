@@ -1,0 +1,19 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/parameters-and-return-values/4200/
+
+Code: 
+--Creating procedure where you create a variable which contains letter you want to find in a CountryName. 
+--By deleting the first or second wildcard sign you can change whetner you want the CountryName to end or start with the input letter.
+
+Create Proc CountriesProcedure
+(@Letter char(1))
+as
+begin
+
+select EventName, EventDate, CountryName
+from tblEvent E
+join tblCountry C
+on E.CountryID=C.CountryID
+Where CountryName like '%'+@Letter+'%'
+end
+
+exec CountriesProcedure S
