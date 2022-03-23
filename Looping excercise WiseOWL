@@ -1,0 +1,21 @@
+
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/looping/4206/
+
+
+Code:
+
+declare @Var tinyint --Declaring variable as tinyint to save memory.
+set @Var=1
+while @Var<=12 --While Variable is lower or equal to 12 (December) perform querry.
+begin
+declare @EventList varchar(max) --Variable to create a list.
+
+select @EventList=string_agg(eventname, ', ')  --string_agg function to list everything
+from tblEvent
+where datepart(month, eventdate)=@Var
+
+--Print everything. Year and day value in datename function is not relevant for the querry. It is used just so the code could be executed.
+print 'Events which occured in ' + datename(mm,'2017-'+cast(@Var as varchar(2))+'-01')+': '+@EventList
+
+set @Var=@Var+1
+end
