@@ -1,0 +1,20 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1109/
+
+Code:
+
+--In description is written that you should create view using View Designer feature in SQL Server Management Studio.
+--I personally like better to write a code to create it. But I've created it using view designer and altered it manually.
+
+--First write Create view than alter it.
+ALTER VIEW [dbo].[View_1]
+AS
+SELECT        dbo.tblCountry.CountryName, COUNT(dbo.tblEvent.EventId) AS Expr1
+FROM            dbo.tblCountry INNER JOIN
+                         dbo.tblEvent ON dbo.tblCountry.CountryId = dbo.tblEvent.CountryId
+WHERE        dbo.tblEvent.EventDate >= '1990-01-01'
+GROUP BY dbo.tblCountry.CountryName
+HAVING        (COUNT(dbo.tblEvent.EventId) >= 5)
+GO
+
+
+select * from view_1
