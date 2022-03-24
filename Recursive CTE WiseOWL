@@ -1,0 +1,82 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/more-exotic-joins/4124/
+
+Code:
+--The first sollution is to self join this table 3 times. However I decided to try and create a recursive CTE as a sollution.
+with C as
+
+(Select FamilyId, FamilyName, cast(FamilyName as varchar(100)) as Family_Path --Family Path could be casted as varchar with a smaller number of characters.
+from tblFamily 
+where ParentFamilyId is null
+
+union all --Don't forget when you union 2 table, the amount of columns must be the same. 
+
+select F.FamilyID,f.FamilyName, cast(C.Family_Path+ ' >'+ f.FamilyName as varchar(100)) as Family_Path
+from tblFamily f --Using a Family Path from table C as a primary member of the hierarchy then a family Name from the second table for a secondary and terciary member.
+join C
+on f.ParentFamilyId=C.FamilyID
+)
+
+select * from C 
+
+order by FamilyID asc
+
+--Here is a sollution with joins.
+
+Code:
+
+select Fam.FamilyName, case when top1.FamilyName is null then ''
+else top1.FamilyName +' > '
+end + case when parent.FamilyName is null then ''
+else parent.FamilyName +' > ' end 
++ fam.FamilyName as Family_Path
+from tblFamily Fam
+left join tblFamily Parent
+on fam.ParentFamilyId=Parent.FamilyID
+left join tblFamily Top1
+on Parent.ParentfamilyId=Top1.FamilyID
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+Excercise link:https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/1879/
+
+Code:
+
+use Carnival
+
+with menuS as
+(--Creating the initial table with a data which should be primary in the hierarchy.
+select menuid, menuname, cast ('Top' as varchar(100)) as BreadCrumbs
+from tblMenu
+where ParentMenuId is null
+
+union all
+--creating the recursion and joining 2 tables.
+Select M.MenuId, M.MenuName, cast (Ms.BreadCrumbs+' >'+ms.MenuName as varchar(100)) as BreadCrumbs
+from tblMenu M
+join menuS Ms
+on M.ParentMenuId=Ms.MenuId)
+
+select * from menuS option (maxrecursion 2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
