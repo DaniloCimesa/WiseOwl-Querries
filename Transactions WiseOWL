@@ -1,0 +1,46 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/transactions/4208/
+
+Code: 
+
+use WorldEvents
+
+--1. step
+--Insert into table your birthday. You may have to set identity insert to on.
+set identity_insert tblEvent ON
+
+insert into tblEvent (EventID, EventName, EventDetails, EventDate)
+values
+(599, 'My DOB', 'I was born and the world trembles', '1997-08-23')
+
+--2. step
+--Check if your data is inserted.
+select * 
+from tblEvent
+where EventName='My DOB'
+
+--3.step
+--Delete inserted data.
+delete 
+from tblEvent
+where eventid=599
+--4.step 
+--creating transaction
+
+Begin transaction MyDOBEvent
+
+If (Select count(*) from tblEvent where EventName='My DOB')!=0
+begin
+Rollback transaction MyDOBEvent
+select 'This magnificent event already exists' as [Event Results]
+end
+else
+begin 
+insert into tblEvent (EventID, EventName, EventDetails, EventDate)
+values
+(599, 'My DOB', 'I was born and the world trembles', '1997-08-23')
+commit tran
+select 'This momentous event has now been added' as EventResults
+end
+
+
+select * from tblEvent order by eventid desc
