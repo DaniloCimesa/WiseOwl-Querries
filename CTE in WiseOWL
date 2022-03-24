@@ -30,3 +30,37 @@ join tblDirector D
 on F.FilmDirectorID=D.DirectorID
 where DirectorName ='Steven Spielberg'
 ---------------------------------------------------------------------------------
+
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4266/
+
+Code:
+
+with ManyCountries
+
+as (
+
+select ContinentName, Count(countryName) as CountryCount
+from tblCountry C
+join tblContinent Co
+on C.ContinentID=Co.ContinentID
+group by ContinentName
+having COUNT(countryname)>3
+),
+
+FewEvents as
+(
+select distinct ContinentName, count(EventName) as EventCount
+from tblCountry C
+join tblContinent Co
+on C.ContinentID=Co.ContinentID
+join tblEvent E
+on C.CountryID=E.CountryID
+group by ContinentName
+having count(eventname)<10
+)
+
+select FE.ContinentName, CountryCount, EventCount
+from ManyCountries MC
+join FewEvents FE
+on MC.ContinentName=FE.ContinentName
+--------------------------------------------------------------------------------------
