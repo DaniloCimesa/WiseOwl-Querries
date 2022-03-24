@@ -1,0 +1,32 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1882/
+
+Code: 
+
+Use Movie
+
+with cte_a as
+(select FilmName, FilmID 
+from tblDirector D
+join tblFilm F
+on D.DirectorID=F.FilmDirectorID
+Where DirectorName ='Steven Spielberg'
+)
+select ActorName, FilmName, CastCharacterName
+from cte_a
+join tblCast C
+on C.CastFilmID=cte_a.FilmID
+join tblActor A
+on C.CastActorID=A.ActorID
+
+--Sollution without creating CTE. Simply creating a huge table with couple of joins in a row.
+
+select ActorName, FilmName, CastCharacterName
+from tblCast C
+join tblActor A
+on C.CastActorID=A.ActorID 
+join tblFilm F
+on C.CastFilmID=F.FilmID
+join tblDirector D
+on F.FilmDirectorID=D.DirectorID
+where DirectorName ='Steven Spielberg'
+---------------------------------------------------------------------------------
