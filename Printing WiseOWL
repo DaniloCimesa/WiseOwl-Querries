@@ -17,3 +17,36 @@ PRINT ''
 Print 'Event Name      /      Event Date'
 PRINT '------------------------------'
 Print @List
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1775/
+
+Code:
+
+use Training 
+
+--It could be done without making procedure. 
+Alter Procedure Printing 
+(@CourseNum smallint)
+as
+begin
+declare @CourseNameVar varchar(30)
+declare @StartDate date
+declare @NumberDays varchar(10)
+
+select @CourseNameVar=Upper(CourseName),@StartDate=StartDate, @NumberDays=NumberDays 
+from tblCourse C
+join tblSchedule S
+on c.CourseId=s.CourseId
+where ScheduleId=@CourseNum
+
+Print 'About course number ' + convert (varchar(2),@CourseNum)
+Print '-------------------------'
+Print 'Start date: ' + convert(varchar(20),@StartDate)
+Print 'Course name: '+ @CourseNameVar
+Print 'Course length: '+ @NumberDays +' day(s)'
+end
+
+exec Printing 17
+
+--------------------------------------------------------------------------------------------------------------------------------------------
