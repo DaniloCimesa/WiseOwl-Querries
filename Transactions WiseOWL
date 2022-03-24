@@ -33,6 +33,34 @@ begin
 Rollback transaction MyDOBEvent
 select 'This magnificent event already exists' as [Event Results]
 end
+---------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1788/
+
+Code:
+begin transaction 
+
+update tblPerson
+set Importance = 
+case when (Select count(*) from tblDelegate where tblDelegate.PersonId=tblPerson.PersonId)<=1 then 10
+     when (Select count(*) from tblDelegate where tblDelegate.PersonId=tblPerson.PersonId)<=4 then 20
+	 else 30
+	 end 
+
+declare @RowsDeleted int
+delete from tblPerson
+where Importance = 10
+
+set @RowsDeleted=@@ROWCOUNT
+PRINT CAST(@RowsDeleted AS varchar(4)) + ' unimportant people deleted'
+
+DECLARE @Rowsleft int
+SET @RowsLeft = (SELECT COUNT(*) FROM tblPerson)
+
+
+IF @RowsLeft < 500 
+	ROLLBACK
+ELSE
+	COMMIT 
 else
 begin 
 insert into tblEvent (EventID, EventName, EventDetails, EventDate)
