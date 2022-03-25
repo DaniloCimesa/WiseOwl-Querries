@@ -74,4 +74,28 @@ end
 select * from tblPerson
 ---------------------------------------------------------------------
 
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1787/
+
+Code:
+
+use Websites
+--Create 2 variables to store the number of rows.
+declare @DeletedRows int
+declare @FullRows int
+
+begin transaction
+delete 
+from Data_at_14_Jan_2010 
+where Category in ('Adult', 'Betting')
+--Setting the variable as count of rows.
+set @DeletedRows=(Select Count(*) from Data_at_14_Jan_2010)
+
+rollback --Rolling back transaction and counting the number of rows after.
+
+set @FullRows= (Select count(*) from Data_at_14_Jan_2010)
+
+print 'After deletion: ' + cast (@deletedrows as varchar(4))
+print 'After rollback: ' + cast (@fullrows as varchar(4))
+--Printing the results.
+---------------------------------------------------------------------------
 
