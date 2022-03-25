@@ -64,3 +64,33 @@ from ManyCountries MC
 join FewEvents FE
 on MC.ContinentName=FE.ContinentName
 --------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/calculations/4114/
+
+Code:
+
+
+use WorldEvents
+--One way to do it. With creating a common table expression.
+with cte_a as
+(
+select Country, KmSquared, KmSquared/20761 as WalesUnits, KmSquared%20761 as AreaLeftOver
+from CountriesByArea
+)
+
+select *, case when kmsquared < 20761 then 'Smaller than Wales'
+else convert(varchar(4), WalesUnits)+' x Wales plus ' + convert(varchar(10), AreaLeftOver)+ ' sq. km'
+end as WalesComparison
+from cte_a
+
+--Another way. With declaring a variable which contains area of Wales. Second one is a bit more complicated to read if you ask me. 
+
+Declare @WalesSize int = 20761
+select Country, KmSquared, KmSquared/@WalesSize as WalesUnits, KmSquared%@WalesSize as AreaLeftOver, 
+case when KmSquared<@WalesSize then 'Smaller than Wales'
+else (Cast((KmSquared/@WalesSize) as varchar(4)))+' x Wales plus '+(convert(varchar(10), KmSquared%@WalesSize)) +' sq. km'
+end as WalesComparison
+from CountriesByArea
+-----------------------------------------------------------------------------------------------------------
+
+
+
