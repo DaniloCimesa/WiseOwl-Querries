@@ -18,3 +18,36 @@ end
 
 exec CountriesProcedure S
 --For example I used a input letter S.
+-------------------------------------------------------------------------------------------------------------------------------------------
+
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/parameters-and-return-values/4211/
+
+Code:
+
+use WorldEvents
+
+alter procedure uspContinentEvents 
+
+(@ContinentName varchar(20),
+@StartDate varchar(10),
+@EndDate varchar(10))
+
+as
+begin
+Select ContinentName, EventName, EventDate
+from tblEvent E
+join tblCountry C
+on E.CountryID=C.CountryID
+join tblContinent Co
+on C.ContinentID=Co.ContinentID
+where ContinentName like '%'+@ContinentName+'%' and EventDate between @StartDate and @EndDate
+
+end
+
+exec uspContinentEvents Asia, '1990-01-01', '2000-01-01'
+--For example input data I used is continent Asia and dates between January 1st 1990 and January 1st 2000.
+--------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
