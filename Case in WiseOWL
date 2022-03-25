@@ -1,0 +1,27 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1107/
+
+
+Code:
+
+select case
+when eventdate<'1950-01-01' then 'Decade 1- forties'
+when eventdate<'1960-01-01' then 'Decade 2 - fifties'
+when eventdate<'1970-01-01' then 'Decade 3 - sixties'
+when eventdate<'1980-01-01' then 'Decade 4 - seventies'
+when eventdate<'1990-01-01' then 'Decade 5 - eighties'
+when eventdate<'2000-01-01' then 'Decade 6 - ninties'
+else 'Decade 7 - noughties'
+end as Decade, count(*) as [Number of Events]
+from tblEvent
+group by 
+case
+when eventdate<'1950-01-01' then 'Decade 1- forties'
+when eventdate<'1960-01-01' then 'Decade 2 - fifties'
+when eventdate<'1970-01-01' then 'Decade 3 - sixties'
+when eventdate<'1980-01-01' then 'Decade 4 - seventies'
+when eventdate<'1990-01-01' then 'Decade 5 - eighties'
+when eventdate<'2000-01-01' then 'Decade 6 - ninties'
+else 'Decade 7 - noughties'
+end
+-------------------------------------------------------------------------------------
+
