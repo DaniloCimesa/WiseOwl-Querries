@@ -47,7 +47,30 @@ end
 exec uspContinentEvents Asia, '1990-01-01', '2000-01-01'
 --For example input data I used is continent Asia and dates between January 1st 1990 and January 1st 2000.
 --------------------------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/dynamic-sql/1804/
 
+
+Code:
+--Creating a procedure where input parameters are stored in a variable which is executed at the end.
+use Training
+
+alter Proc spSelect 
+(@Columns varchar(100),
+@TableName varchar(50),
+@NumberRows int,
+@OrderColumn varchar (50)
+)
+as
+declare @Variable varchar(max)=
+
+'Select Top ' +convert(varchar(5),@NumberRows)+' '+ @Columns+
+' from '+@TableName+
+' order by '+@OrderColumn
+
+exec (@Variable)
+
+exec spSelect 'FirstName, LastName', 'tblPerson', 5, 'LastName'
+-----------------------------------------------------------------------------------------------------------------------------------------
 
 
 
