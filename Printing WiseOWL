@@ -50,3 +50,37 @@ end
 exec Printing 17
 
 --------------------------------------------------------------------------------------------------------------------------------------------
+
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/simple-queries/4103/
+
+Code:
+--Declaring variables and giving them values from querries. 
+use WorldEvents
+
+declare @Var1 varchar(max)
+Set @Var1=''
+Select top 2 @Var1=@Var1+char(13)+char(10)+' '+EventName+' ' +convert(varchar(10), EventDate)
+from tblEvent
+order by EventDate asc
+
+
+declare @Var2 varchar(max)
+set @Var2=''
+
+select top 2 @Var2=@Var2+char(13)+char(10)+' '+EventName+' ' +convert(varchar(10), EventDate)
+from tblEvent
+order by EventDate desc
+
+print ' What'
+print ' ----------------------------------------'
+print @Var1
+print ' '
+print ' What'
+print ' ----------------------------------------'
+print @Var2
+
+---------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
