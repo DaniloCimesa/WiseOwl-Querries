@@ -1,0 +1,39 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1786/
+
+Code: 
+
+use Training
+
+
+alter function fnCountIds
+(@Ids varchar(50))
+returns int
+as
+begin
+
+Declare @Comma char(1)
+Declare @EmptyString varchar(1)
+
+Set @Comma = ','
+Set @EmptyString = ''
+
+Declare @LengthWithCommas int
+Declare @LengthWithoutCommas int
+--Subtract a length of the TrainerId without a comma with a TrainerId with a comma and adding an aditional +1. 
+--Because the number of commas shows the number of values of TrainersID-1 so by adding the +1 it gives you the real number.
+SET @LengthWithCommas = len(@Ids)
+SET @LengthWithoutCommas = len(replace(@Ids,@Comma,@EmptyString))
+
+RETURN @LengthWithCommas - @LengthWithoutCommas + 1
+
+end
+
+
+select coursename as [Course Name], TrainerIds, convert(varchar, Startdate,102) as [Start date], dbo.fnCountIds (S.Trainerids) as Trainers
+from tblSchedule S
+join tblCourse C
+on s.CourseId=c.CourseId
+order by [Start date] asc
+
+
+
