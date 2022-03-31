@@ -24,4 +24,24 @@ when eventdate<'2000-01-01' then 'Decade 6 - ninties'
 else 'Decade 7 - noughties'
 end
 -------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/aggregation-and-grouping/4129/
 
+
+Code: 
+
+select case when year(eventdate)>=2000 then '21st century'
+            when year(eventdate)>=1900 then '20th century'
+			when year(eventdate)>=1800 then '19th century'
+			when year(eventdate)>=1700 then '18th century'
+			else ''
+			end as Century, count(eventid) as [Number Events]
+from tblEvent
+group by 
+(case when year(eventdate)>=2000 then '21st century'
+            when year(eventdate)>=1900 then '20th century'
+			when year(eventdate)>=1800 then '19th century'
+			when year(eventdate)>=1700 then '18th century'
+			else '' 
+			end) with cube
+---------------------------------------------------------------------------------------------------      
+      
