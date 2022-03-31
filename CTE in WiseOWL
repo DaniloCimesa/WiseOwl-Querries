@@ -91,6 +91,28 @@ else (Cast((KmSquared/@WalesSize) as varchar(4)))+' x Wales plus '+(convert(varc
 end as WalesComparison
 from CountriesByArea
 -----------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4136/
 
+Code:
+
+
+use WorldEvents
+--Merging 2 CTE's in one
+With TopCountries as(
+
+select top 3 CountryID, count(eventid) as EventCount
+from tblEvent
+group by CountryID
+order by EventCount desc
+),
+
+ TopCategories as (select top 3 CategoryID, count(eventid) as CatCount
+from tblEvent
+group by CategoryID
+order by CatCount desc)
+
+select cy.CountryId, cg.CategoryId
+from topcountries as cy cross join topcategories as cg 
+---------------------------------------------------------------------------------------------------------------------
 
 
