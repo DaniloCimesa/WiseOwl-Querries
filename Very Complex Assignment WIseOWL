@@ -1,0 +1,32 @@
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/3991/
+
+Code: 
+
+use DoctorWho
+
+--As it is said in the description this assignment can be done in many ways. 
+--My choice after a good hour of trying and an extra hour of thinking was a subquery within subquery within subquery.
+--Steps are in a bit confused order
+
+--Step 3.
+--As a picture on the link says, these two columns are the ones you need for your sollution.
+Select EpisodeId, Title
+from tblEpisode
+where EpisodeId not in (
+--Step 2.
+--Here I extracted the EpisodeIds from again joined table of Episode and EpisodeEnemy but where enemyId is in a previous extraction.
+Select En.EpisodeID
+from tblEpisode Ep
+join tblEpisodeEnemy En
+on Ep.EpisodeId=En.EpisodeId
+where enemyid in (
+--Step 1.
+--I extracted the enemyIds from a joined table of Episode 
+--and EpisodeEnemy where DoctorId was different then the one which is assigned to David Tennant.
+select distinct EnemyId
+from tblEpisode E
+join tblEpisodeEnemy Ee
+on E.EpisodeId=Ee.EpisodeId
+where DoctorId!=(Select DoctorId from tblDoctor where DoctorName='David Tennant'))) and doctorid=(Select DoctorId from tblDoctor where DoctorName='David Tennant')
+order by title asc
+--Step 4. in the end, I had to add and statement just to reach the wanted number of rows.
