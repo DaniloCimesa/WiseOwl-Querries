@@ -34,6 +34,50 @@ from tblSchedule S
 join tblCourse C
 on s.CourseId=c.CourseId
 order by [Start date] asc
+-----------------------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1262/
+
+Code:
+
+use HistoricalEvents
+
+--Function which uses EventDate as variable and returns text variable @ReturnText. 
+create function FnPunk 
+(@date datetime)
+returns  varchar(10)
+as
+begin
+declare @ReturnText as varchar(10)
+set @ReturnText =
+       case when @date<'01-01-1975' then 'Pre-punk'
+            when @date>'12-31-1979' then 'Post-punk'
+			else 'punk'
+end 
+return @ReturnText
+end
+--Then implement function in select statement and in group by.
+select dbo.fnPunk(Eventdate) as Punk_Era, count(EventName) as [Number of Events]
+from tblEvent
+group by dbo.fnPunk(EventDate)
+
+--This can also be solved using CTE. Here is code.
+
+with cte_a as (
+
+
+select case when EventDate<'01-01-1975' then 'Pre-punk'
+when EventDate>'12-31-1979' then 'Post punk'
+else 'punk' end as PunkEra,
+EventName
+from tblEvent)
+
+select PunkEra, count(EventName)
+from cte_a
+group by PunkEra
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
