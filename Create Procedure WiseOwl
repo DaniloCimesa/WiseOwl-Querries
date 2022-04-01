@@ -71,6 +71,27 @@ exec (@Variable)
 
 exec spSelect 'FirstName, LastName', 'tblPerson', 5, 'LastName'
 -----------------------------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1264/
 
+Code:
+
+--Procedure which returns Events whose input start letter and end letter is given. End letter can be left out.
+ALTER procedure spEvents
+(@StartLetter char(1),
+@EndLetter char(1)='')
+as
+begin 
+
+select EventName as [Name of Event], convert (varchar(30),EventDate,101) as [Date of Event]
+from tblEvent
+where Left(EventName,1)=@StartLetter AND
+@EndLetter=case
+			when @EndLetter='' THEN @EndLetter
+			else Right(EventName,1)
+			end
+end
+--In where clause using the case with @EndLetter variable to case if the end letter is given then it should be the one 
+--in the end and if it is not given then do nothing.
+------------------------------------------------------------------------------------------------------------------------------------
 
 
