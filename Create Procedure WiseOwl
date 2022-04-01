@@ -93,5 +93,26 @@ end
 --In where clause using the case with @EndLetter variable to case if the end letter is given then it should be the one 
 --in the end and if it is not given then do nothing.
 ------------------------------------------------------------------------------------------------------------------------------------
+Excercise Link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1779/
 
+Code:
+use Training
+
+Create Proc SpListDelegates 
+(@CompanyName varchar(30)=Null,
+ @CourseName varchar(30)=Null)
+ as
+begin
+select OrgName as 'Company Name', CourseName as 'Course Name'
+from tblPerson P
+join tblOrg O
+on P.OrgId=O.OrgId
+join tblDelegate D
+on P.Personid=D.PersonId
+join tblSchedule S
+on S.ScheduleId=D.ScheduleId
+join tblCourse C
+on C.CourseId=S.CourseId
+where (@CompanyName is null or OrgName=@CompanyName) and (@CourseName is null or CourseName like '%'+@CourseName+'%')
+end
 
