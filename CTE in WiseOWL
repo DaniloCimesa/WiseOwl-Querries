@@ -30,7 +30,6 @@ join tblDirector D
 on F.FilmDirectorID=D.DirectorID
 where DirectorName ='Steven Spielberg'
 ---------------------------------------------------------------------------------
-
 Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4266/
 
 Code:
@@ -114,5 +113,26 @@ order by CatCount desc)
 select cy.CountryId, cg.CategoryId
 from topcountries as cy cross join topcategories as cg 
 ---------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4249/
 
+Code:
 
+use WorldEvents
+--CTE to find CategoryNames for events that occured in Space.
+with cte_a as (
+
+Select distinct CountryName, CategoryName, E.CategoryID
+from tblEvent E
+join tblCountry C
+on E.CountryID=C.CountryID
+join tblCategory Ca
+on E.CategoryID=Ca.CategoryID
+where CountryName='Space'
+)
+--Using the Data from CTE to get the wanted rows.
+select distinct CountryName
+from tblEvent E
+join tblCountry C
+on E.CountryID=C.CountryID
+where CategoryID in (Select CategoryID from cte_a) and CountryName !='Space'
+------------------------------------------------------------------------------------------------------------------
