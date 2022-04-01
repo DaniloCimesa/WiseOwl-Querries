@@ -69,4 +69,42 @@ full join tblContinent C
 on Co.ContinentID=C.ContinentID
 group by CountryName
 ---------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/temporary-tables-and-table-variables/4234/
+
+Code:
+
+use WorldEvents
+--This is the way they want you to do this excercise.
+--Step 1 Create a table variable.
+declare @OddCountries table
+(OddName varchar(20), OddID tinyint)
+--Step 2 Inserting data into the table
+insert into @OddCountries
+
+select countryName, countryID
+from tblCountry
+where countryID%2=1
+--Joining the table variable with table of events. Using where clause to get the desired data.
+select EventName, OddName
+from tblEvent E
+join @OddCountries A
+on E.CountryID=A.OddID
+where (right(EventName,1))=(right(OddName,1)) and eventName not like '%'+OddName+'%'
+
+
+--Also did it using CTE, where at first I created CTE with table of countries with an odd ID number. 
+--Then Joined CTE with table of events and in the end using where to get the wanted rows.
+With cte_a as (
+select countryName, countryID
+from tblCountry
+where countryID%2=1
+)
+
+select EventName, CountryName as OddName
+from tblEvent E
+join cte_a A
+on E.CountryID=A.CountryID
+where right(EventName,1)=right(CountryName,1) and EventName not like '%'+CountryName+'%'
+-------------------------------------------------------------------------------------------------------------------------------
+
 
