@@ -161,3 +161,36 @@ declare @NumCompanions int
 exec spGoodandBad @SeriesNumber, @NumEnemies output, @NumCompanions output
 
 Select @SeriesNumber as SeriesNum, @NumEnemies as Enemies, @NumCompanions as Companions
+--------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/parameters-and-return-values/4220/
+
+Code: 
+
+use WorldEvents
+--Create a procedure where you output parameters. Then create a querry you want.
+alter Proc SpCountryNumers
+(@InputCountry varchar(50)=Null output,
+@EventCount int=null output)
+as
+
+begin
+
+select top 1 @InputCountry=countryName, @EventCount = count(E.CountryID)
+from tblEvent E
+join tblCountry C
+on E.CountryID=C.CountryID
+group by CountryName
+order by count(E.CountryID) desc
+
+end
+--After you run the procedure. Create variables which will contain output parameters from procedure.
+Declare @CountryVariable varchar(250)
+Declare @EventVariable int
+--Execute the procedure and write an equation where a variable will be equal to corresponding output parameter.
+exec spCountryNumers 
+@InputCountry = @CountryVariable output,
+@EventCount = @EventVariable output
+--Run the recently declared variables in select statement to show them.
+select @CountryVariable as Country, @EventVariable as [Number of Events]
+--------------------------------------------------------------------------------------------------------------------
+
