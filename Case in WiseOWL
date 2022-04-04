@@ -44,4 +44,18 @@ group by
 			else '' 
 			end) with cube
 ---------------------------------------------------------------------------------------------------      
-      
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1096/
+
+Code: 
+--Simple case statement. Nothing fancy.    
+use HistoricalEvents
+
+select Eventdate, eventName, CountryId, 
+case when CountryId=17 then 'UK'
+     when CountryId=18 then 'United States'
+	                   else 'Somewhere else'
+end as [Type of Event]
+from tblEvent
+----------------------------------------------------------------------------------------------------
+
+
