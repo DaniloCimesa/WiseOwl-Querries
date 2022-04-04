@@ -115,4 +115,49 @@ join tblCourse C
 on C.CourseId=S.CourseId
 where (@CompanyName is null or OrgName=@CompanyName) and (@CourseName is null or CourseName like '%'+@CourseName+'%')
 end
+------------------------------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/parameters-and-return-values/3974/
 
+
+code: use doctorwho
+--Excercise made just to practice how to return variables from procedure. This assignment could be done in a more easier way but okay.
+alter Proc spGoodandBad
+(@SeriesNumber int,
+ @NumEnemies int output,
+ @NumCompanions int output)
+as
+begin
+
+Declare @companions int = (
+select  Count(distinct(CompanionName))
+from tblEpisode E
+join tblEpisodeCompanion Ec
+on E.EpisodeId=Ec.EpisodeId
+join tblCompanion C
+on Ec.CompanionId=C.CompanionId
+where SeriesNumber=@SeriesNumber
+group by SeriesNumber)
+
+declare @enemies int = (
+
+select count(distinct(En.EnemyId))
+from tblEpisode E
+join tblEpisodeEnemy Ee
+on E.EpisodeId=Ee.EpisodeId
+join tblEnemy En
+on Ee.EnemyId=En.EnemyId
+where SeriesNumber=@SeriesNumber
+group by SeriesNumber
+)
+Set @NumEnemies=@enemies
+set @NumCompanions=@companions
+
+end
+
+declare @SeriesNumber int=3
+declare @NumEnemies int
+declare @NumCompanions int
+
+exec spGoodandBad @SeriesNumber, @NumEnemies output, @NumCompanions output
+
+Select @SeriesNumber as SeriesNum, @NumEnemies as Enemies, @NumCompanions as Companions
