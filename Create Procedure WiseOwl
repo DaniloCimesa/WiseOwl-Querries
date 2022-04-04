@@ -193,4 +193,23 @@ exec spCountryNumers
 --Run the recently declared variables in select statement to show them.
 select @CountryVariable as Country, @EventVariable as [Number of Events]
 --------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/dynamic-sql/3992/
 
+
+Code:
+use DoctorWho
+--Procedure where you have a variable within the procedure.
+alter proc spEpisodesSorted
+(@SortColumn varchar(30)= 'EpisodeId',
+@SortOrder varchar(10)= 'ASC')
+
+as
+declare @Sql varchar(max)=
+'
+Select *
+from tblEpisode
+order by ' + @SortColumn +' ' + @SortOrder
+
+exec (@sql)
+
+spEpisodesSorted 'Title', 'Desc'
