@@ -80,7 +80,24 @@ print ' ----------------------------------------'
 print @Var2
 
 ---------------------------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/variables/3970/
 
+Code:
+--First declaring variables, then setting them and after that printing them. Simple excercise. 
+use DoctorWho
+
+declare @DoctorNumber int=1
+declare @DoctorName varchar(100)
+declare @NumberEpisodes int
+
+set @DoctorName= (Select DoctorName from tblDoctor where DoctorId=@DoctorNumber)
+set @NumberEpisodes = (Select count(episodeid) from tblEpisode where DoctorId=@DoctorNumber)
+
+print 'Results for doctor number '+convert(varchar(2), @DoctorNumber) 
+print '---------------------------'
+print 'Doctor Name: ' + @DoctorName
+print 'Episodes appeard in: ' + convert (varchar(5), @NumberEpisodes) 
+------------------------------------------------------------------------------------------------------------------------------
 
 
 
