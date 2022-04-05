@@ -98,6 +98,40 @@ print '---------------------------'
 print 'Doctor Name: ' + @DoctorName
 print 'Episodes appeard in: ' + convert (varchar(5), @NumberEpisodes) 
 ------------------------------------------------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1776/
+
+Code:
+
+use training
+--Setting first variable should be easy.
+Declare @CourseName varchar(50)
+
+set @CourseName = (
+
+select CourseName
+from tblCourse C
+join tblSchedule S
+on C.CourseId=S.CourseId
+where ScheduleId=1 )
+--Second variable is a bit tricky, you have to set it as a blank then with a select statement you get values/rows you want to. 
+--Note you have to add char(13) and char(10) and you get a line break. 
+declare @People varchar(max)
+set @People=''
+
+select @People = @People+ FirstName +' '+ LastName+char(13)+char(10)
+
+FROM	
+	tblPerson AS p
+	INNER JOIN tblDelegate AS d ON p.PersonId=d.DelegateId
+	INNER JOIN tblSchedule AS s on d.ScheduleId=s.ScheduleId
+	INNER JOIN tblCourse AS c on s.CourseId=c.CourseId
+WHERE
+	s.ScheduleId=1
+
+
+Print @CourseName
+Print @People
+------------------------------------------------------------------------------------------------------
 
 
 
