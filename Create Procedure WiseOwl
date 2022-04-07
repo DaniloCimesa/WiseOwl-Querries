@@ -213,3 +213,39 @@ order by ' + @SortColumn +' ' + @SortOrder
 exec (@sql)
 
 spEpisodesSorted 'Title', 'Desc'
+-------------------------------------------------------------------------------------
+Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/parameters-and-return-values/4223/
+
+Code:
+use WorldEvents
+--Create first procedure which will give us the output parameter.
+Alter Proc TimeOfWoe
+(@FirstContinent varchar(100)=null output)
+as
+
+select top 1 @FirstContinent=ContinentName
+from tblEvent E
+join tblCountry C
+on E.CountryID=C.CountryID
+join tblContinent Co
+on C.ContinentID=Co.ContinentID
+order by EventDate asc
+
+
+--Second procedure will use the parameter from procedure 1.
+Create Proc TimeOfWoe2
+(@ContinentName varchar(100))
+as
+
+select EventName, EventDate, ContinentName
+from tblEvent E
+join tblCountry C
+on E.CountryID=C.CountryID
+join tblContinent Co
+on C.ContinentID=Co.ContinentID
+where ContinentName=@ContinentName
+
+--Here we have to declare the second variable which will contain the variable from the first procedure and output it for the second one.
+declare @Var1 varchar(100)=''
+exec TimeOfWoe @FirstContinent=@Var1 output
+exec TimeOfWoe2 @ContinentName=@Var1
