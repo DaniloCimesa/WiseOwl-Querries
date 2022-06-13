@@ -1,7 +1,9 @@
+
+
 Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/pivots/4169/
 
 Code:
-
+```
 use DoctorWho
 
 with Source as (
@@ -16,5 +18,6 @@ on E.DoctorId=D.DoctorId
 select *
 from Source
 pivot (count(EpisodeId) for episodeType in ([Normal], [Christmas], [50th], [Autumn], [Easter])) as pivottable
+```
 --------------------------------------------------------------------------------------------------------------
 
