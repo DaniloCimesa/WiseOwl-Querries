@@ -1,3 +1,5 @@
+```
+
 Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/parameters-and-return-values/4200/
 
 Code: 
@@ -249,3 +251,35 @@ where ContinentName=@ContinentName
 declare @Var1 varchar(100)=''
 exec TimeOfWoe @FirstContinent=@Var1 output
 exec TimeOfWoe2 @ContinentName=@Var1
+---------------------------------------------------------------------------------------------------
+
+--Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/2365/
+
+--Adding to DB from a procedure.
+
+Code:
+use HistoricalEvents
+
+create procedure spAddEvent 
+(@EventName varchar(20), @Eventdate datetime, @Description varchar(max), @CountryId smallint) 
+
+as
+begin 
+insert into tblEvent(
+EventName,
+EventDate, 
+Description,
+CountryId)
+values (
+@EventName,
+@EventDate,
+@Description,
+@CountryId)
+end
+
+exec spAddEvent 'Spain win World Cup', '07/11/2010', 'Spain defeat the Netherlands in overtime', 14
+
+select *
+from tblEvent
+order by EventDate desc
+```
