@@ -1,4 +1,4 @@
-```
+
 
 Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/parameters-and-return-values/4200/
 
@@ -282,4 +282,4 @@ exec spAddEvent 'Spain win World Cup', '07/11/2010', 'Spain defeat the Netherlan
 select *
 from tblEvent
 order by EventDate desc
-```
+
