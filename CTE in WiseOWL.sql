@@ -1,6 +1,6 @@
-Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1882/
+--Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/archived/1882/
 
-Code: 
+--Code: 
 
 Use Movie
 
@@ -30,9 +30,9 @@ join tblDirector D
 on F.FilmDirectorID=D.DirectorID
 where DirectorName ='Steven Spielberg'
 ---------------------------------------------------------------------------------
-Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4266/
+--Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4266/
 
-Code:
+--Code:
 
 with ManyCountries
 
@@ -63,9 +63,9 @@ from ManyCountries MC
 join FewEvents FE
 on MC.ContinentName=FE.ContinentName
 --------------------------------------------------------------------------------------
-Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/calculations/4114/
+--Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/calculations/4114/
 
-Code:
+--Code:
 
 
 use WorldEvents
@@ -90,9 +90,9 @@ else (Cast((KmSquared/@WalesSize) as varchar(4)))+' x Wales plus '+(convert(varc
 end as WalesComparison
 from CountriesByArea
 -----------------------------------------------------------------------------------------------------------
-Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4136/
+--Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4136/
 
-Code:
+--Code:
 
 
 use WorldEvents
@@ -113,9 +113,9 @@ order by CatCount desc)
 select cy.CountryId, cg.CategoryId
 from topcountries as cy cross join topcategories as cg 
 ---------------------------------------------------------------------------------------------------------------------
-Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4249/
+--Excercise link: https://www.wiseowl.co.uk/sql/exercises/standard/derived-tables-and-ctes/4249/
 
-Code:
+--Code:
 
 use WorldEvents
 --CTE to find CategoryNames for events that occured in Space.
